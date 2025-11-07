@@ -19,9 +19,9 @@ public partial class Usuario
 
     public int? IdDistrito { get; set; }
 
-    public string Puntuacion { get; set; } = null!;
+    public string? Puntuacion { get; set; }
 
-    public string Rol { get; set; } = null!;
+    public string? Rol { get; set; }
 
     public string? Situacion { get; set; }
 

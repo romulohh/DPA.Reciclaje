@@ -1,4 +1,5 @@
 using DPA.Reciclaje.CORE.Core.Interfaces;
+using DPA.Reciclaje.CORE.Core.Services;
 using DPA.Reciclaje.CORE.Infrastructure.Data;
 using DPA.Reciclaje.CORE.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<ReciclaDbContext>(options =>
 });
 
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

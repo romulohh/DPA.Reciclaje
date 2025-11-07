@@ -53,6 +53,7 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 IdDistrito = dto.IdDistrito,
                 Rol = dto.Rol,
                 Clave = HashPassword(dto.Clave),
+                Puntuacion = "X",
                 Situacion = "C",
                 Estado = "A",
                 UltAccionVenta = "X",

@@ -37,12 +37,12 @@ CREATE TABLE Usuario (
     Clave VARCHAR(256) NOT NULL,
     Direccion VARCHAR(255),
     IdDistrito INT FOREIGN KEY REFERENCES Distrito (IdDistrito),
-	Puntuacion CHAR(1) NOT NULL, -- X: Sin puntuacion, 1 al 5 puntuacion
+	Puntuacion CHAR(1) DEFAULT 'X', -- X: Sin puntuacion, 1 al 5 puntuacion
     Rol CHAR(1) NOT NULL, -- U: Usuario (Default), A: Administrador
-	Situacion CHAR(1), -- V: Visualizacion, C = Completa (Default)
-    Estado CHAR(1), -- A: Activo (Default), X: Inactivo
-	UltAccionVenta CHAR(1), -- X = Ninguna, V = Venta/Compra, D = Donación, I = Intercambio
-	UltAccionCompra CHAR(1), -- X = Ninguna, V = Venta/Compra, D = Donación, I = Intercambio
+	Situacion CHAR(1) DEFAULT 'C', -- V: Visualizacion, C = Completa (Default)
+    Estado CHAR(1) DEFAULT 'A', -- A: Activo (Default), X: Inactivo
+	UltAccionVenta CHAR(1) DEFAULT 'X', -- X = Ninguna, V = Venta/Compra, D = Donación, I = Intercambio
+	UltAccionCompra CHAR(1) DEFAULT 'X', -- X = Ninguna, V = Venta/Compra, D = Donación, I = Intercambio
 	Imagen VARBINARY(MAX),
     FechaRegistro DATETIME DEFAULT GETDATE()
 );
@@ -177,3 +177,30 @@ CREATE TABLE Pago (
     Fecha DATETIME DEFAULT GETDATE(),
 	NumeroOperacion VARCHAR(20)
 );
+--
+-- carga registros
+INSERT INTO Pais (Nombre) VALUES ('Perú');
+--
+INSERT INTO Departamento (Nombre, IdPais)
+VALUES ('Lima', 1), ('Cusco', 1), ('Arequipa', 1);
+--
+INSERT INTO Provincia (Nombre, IdDepartamento)
+VALUES ('Lima', 1), ('Huaral', 1), ('Cusco', 2), ('Urubamba', 2), ('Arequipa', 3), ('Camana', 3);
+--
+INSERT INTO Distrito (Nombre, IdDepartamento, IdProvincia)
+VALUES 
+('Miraflores', 1, 1), 
+('San Isidro', 1, 1), 
+('Chancay', 1, 2), 
+('Aucallama', 1, 2), 
+('Santiago', 2, 3), 
+('San Sebastián', 2, 3),
+('Ollantaytambo', 2, 4), 
+('Yucay', 2, 4), 
+('Cayma', 3, 5), 
+('Yanahuara', 3, 5), 
+('Camana', 3, 6), 
+('Mariscal Cáceres', 3, 6);
+
+--
+SELECT * FROM Usuario
