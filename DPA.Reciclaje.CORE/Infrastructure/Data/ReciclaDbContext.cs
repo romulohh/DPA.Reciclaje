@@ -364,7 +364,7 @@ public partial class ReciclaDbContext : DbContext
         {
             entity.HasKey(e => e.IdProducto).HasName("PK__Producto__09889210A8F6C93F");
 
-            entity.Property(e => e.Descripción)
+            entity.Property(e => e.Descripcion)
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.Disponible)

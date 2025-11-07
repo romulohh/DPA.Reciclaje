@@ -9,7 +9,7 @@ public partial class Producto
 
     public string Nombre { get; set; } = null!;
 
-    public string Descripción { get; set; } = null!;
+    public string Descripcion { get; set; } = null!;
 
     public string? Marca { get; set; }
 
