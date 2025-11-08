@@ -19,6 +19,18 @@ builder.Services.AddDbContext<ReciclaDbContext>(options =>
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 
+// Register categoria services
+builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddTransient<ICategoriaService, CategoriaService>();
+
+// Register producto services
+builder.Services.AddTransient<IProductoRepository, ProductoRepository>();
+builder.Services.AddTransient<IProductoService, ProductoService>();
+
+// Register carrito services
+builder.Services.AddTransient<ICarritoRepository, CarritoRepository>();
+builder.Services.AddTransient<ICarritoService, CarritoService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
