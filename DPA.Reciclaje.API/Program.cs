@@ -31,6 +31,10 @@ builder.Services.AddTransient<IProductoService, ProductoService>();
 builder.Services.AddTransient<ICarritoRepository, CarritoRepository>();
 builder.Services.AddTransient<ICarritoService, CarritoService>();
 
+// Register campaña services
+builder.Services.AddTransient<ICampaniaRepository, CampaniaRepository>();
+builder.Services.AddTransient<ICampaniaService, CampaniaService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
