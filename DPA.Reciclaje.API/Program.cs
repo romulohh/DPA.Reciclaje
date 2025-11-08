@@ -31,6 +31,10 @@ builder.Services.AddTransient<IProductoService, ProductoService>();
 builder.Services.AddTransient<ICarritoRepository, CarritoRepository>();
 builder.Services.AddTransient<ICarritoService, CarritoService>();
 
+// Register favorito services
+builder.Services.AddTransient<IFavoritoRepository, FavoritoRepository>();
+builder.Services.AddTransient<IFavoritoService, FavoritoService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
