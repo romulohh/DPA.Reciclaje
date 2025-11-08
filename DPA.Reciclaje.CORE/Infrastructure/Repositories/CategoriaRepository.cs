@@ -13,19 +13,19 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Categoría>> GetAllCategorias()
+        public async Task<IEnumerable<Categoria>> GetAllCategorias()
         {
-            return await _context.Categoría.ToListAsync();
+            return await _context.Categoria.ToListAsync();
         }
 
-        public async Task<Categoría?> GetCategoriaById(int id)
+        public async Task<Categoria?> GetCategoriaById(int id)
         {
-            return await _context.Categoría.Where(c => c.IdCategoria == id).FirstOrDefaultAsync();
+            return await _context.Categoria.Where(c => c.IdCategoria == id).FirstOrDefaultAsync();
         }
 
-        public async Task<int> AddCategoria(Categoría categoria)
+        public async Task<int> AddCategoria(Categoria categoria)
         {
-            await _context.Categoría.AddAsync(categoria);
+            await _context.Categoria.AddAsync(categoria);
             await _context.SaveChangesAsync();
             return categoria.IdCategoria;
         }

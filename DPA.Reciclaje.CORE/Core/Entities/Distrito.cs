@@ -13,7 +13,7 @@ public partial class Distrito
 
     public int? IdProvincia { get; set; }
 
-    public virtual ICollection<Campaña> Campaña { get; set; } = new List<Campaña>();
+    public virtual ICollection<Campania> Campania { get; set; } = new List<Campania>();
 
     public virtual Departamento? IdDepartamentoNavigation { get; set; }
 

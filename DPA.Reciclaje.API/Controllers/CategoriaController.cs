@@ -36,7 +36,7 @@ namespace DPA.Reciclaje.API.Controllers
                 return BadRequest("Nombre es obligatorio.");
 
             var id = await _categoriaService.CreateAsync(dto);
-            if (id == 0) return Conflict("No se pudo crear la categoría.");
+            if (id == 0) return Conflict("No se pudo crear la Categoria.");
 
             return CreatedAtAction(nameof(GetById), new { id }, dto);
         }

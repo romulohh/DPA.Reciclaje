@@ -27,7 +27,7 @@ namespace DPA.Reciclaje.CORE.Core.Services
 
         public async Task<int> CreateAsync(CategoriaDTO dto)
         {
-            var categoria = new Categoría { Nombre = dto.Nombre };
+            var categoria = new Categoria { Nombre = dto.Nombre };
             var id = await _categoriaRepository.AddCategoria(categoria);
             return id;
         }

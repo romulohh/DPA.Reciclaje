@@ -41,7 +41,7 @@ namespace DPA.Reciclaje.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id }, dto);
         }
 
-        // Filtrar por categoría y ubicación (departamento, provincia, distrito)
+        // Filtrar por Categoria y ubicación (departamento, provincia, distrito)
         [HttpGet("filter")]
         public async Task<IActionResult> Filter([FromQuery] int? categoriaId, [FromQuery] int? departamentoId, [FromQuery] int? provinciaId, [FromQuery] int? distritoId)
         {
