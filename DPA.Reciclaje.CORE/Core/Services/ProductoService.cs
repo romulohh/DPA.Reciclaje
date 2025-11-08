@@ -67,7 +67,8 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 Usuario = p.IdUsuarioNavigation != null ? new UsuarioNestedDTO
                 {
                     IdUsuario = p.IdUsuarioNavigation.IdUsuario,
-                    Nombre = p.IdUsuarioNavigation.Nombres,
+                    Nombres = p.IdUsuarioNavigation.Nombres,
+                    Email = p.IdUsuarioNavigation.Email,
                     Distrito = p.IdUsuarioNavigation.IdDistritoNavigation != null ? new DistritoNestedDTO
                     {
                         IdDistrito = p.IdUsuarioNavigation.IdDistritoNavigation.IdDistrito,
