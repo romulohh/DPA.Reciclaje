@@ -16,15 +16,15 @@ public partial class ReciclaDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Campaña> Campaña { get; set; }
+    public virtual DbSet<Campania> Campania { get; set; }
 
-    public virtual DbSet<CampañaImg> CampañaImg { get; set; }
+    public virtual DbSet<CampaniaImg> CampaniaImg { get; set; }
 
     public virtual DbSet<Carrito> Carrito { get; set; }
 
     public virtual DbSet<CarritoProducto> CarritoProducto { get; set; }
 
-    public virtual DbSet<Categoría> Categoría { get; set; }
+    public virtual DbSet<Categoria> Categoria { get; set; }
 
     public virtual DbSet<Chat> Chat { get; set; }
 
@@ -64,9 +64,9 @@ public partial class ReciclaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Campaña>(entity =>
+        modelBuilder.Entity<Campania>(entity =>
         {
-            entity.HasKey(e => e.IdCampaña).HasName("PK__Campaña__16852050FC9341C7");
+            entity.HasKey(e => e.IdCampania).HasName("PK__Campania__16852050FC9341C7");
 
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(1000)
@@ -77,22 +77,22 @@ public partial class ReciclaDbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Campaña)
+            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Campania)
                 .HasForeignKey(d => d.IdDistrito)
-                .HasConstraintName("FK__Campaña__IdDistr__5BE2A6F2");
+                .HasConstraintName("FK__Campania__IdDistr__5BE2A6F2");
 
-            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Campaña)
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Campania)
                 .HasForeignKey(d => d.IdUsuario)
-                .HasConstraintName("FK__Campaña__IdUsuar__5CD6CB2B");
+                .HasConstraintName("FK__Campania__IdUsuar__5CD6CB2B");
         });
 
-        modelBuilder.Entity<CampañaImg>(entity =>
+        modelBuilder.Entity<CampaniaImg>(entity =>
         {
-            entity.HasKey(e => e.IdCampañaImg).HasName("PK__CampañaI__C15CCC29B72B589F");
+            entity.HasKey(e => e.IdCampaniaImg).HasName("PK__CampaniaI__C15CCC29B72B589F");
 
-            entity.HasOne(d => d.IdCampañaNavigation).WithMany(p => p.CampañaImg)
-                .HasForeignKey(d => d.IdCampaña)
-                .HasConstraintName("FK__CampañaIm__IdCam__5FB337D6");
+            entity.HasOne(d => d.IdCampaniaNavigation).WithMany(p => p.CampaniaImg)
+                .HasForeignKey(d => d.IdCampania)
+                .HasConstraintName("FK__CampaniaIm__IdCam__5FB337D6");
         });
 
         modelBuilder.Entity<Carrito>(entity =>
@@ -130,7 +130,7 @@ public partial class ReciclaDbContext : DbContext
                 .HasConstraintName("FK__CarritoPr__IdPro__6C190EBB");
         });
 
-        modelBuilder.Entity<Categoría>(entity =>
+        modelBuilder.Entity<Categoria>(entity =>
         {
             entity.HasKey(e => e.IdCategoria).HasName("PK__Categorí__A3C02A10FB28E320");
 

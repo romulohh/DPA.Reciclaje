@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DPA.Reciclaje.CORE.Core.Entities;
 
-public partial class Campaña
+public partial class Campania
 {
-    public int IdCampaña { get; set; }
+    public int IdCampania { get; set; }
 
     public string Título { get; set; } = null!;
 
@@ -19,7 +19,7 @@ public partial class Campaña
 
     public int? IdUsuario { get; set; }
 
-    public virtual ICollection<CampañaImg> CampañaImg { get; set; } = new List<CampañaImg>();
+    public virtual ICollection<CampaniaImg> CampaniaImg { get; set; } = new List<CampaniaImg>();
 
     public virtual Distrito? IdDistritoNavigation { get; set; }
 

@@ -4,8 +4,8 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
 {
     public interface ICategoriaRepository
     {
-        Task<IEnumerable<Categoría>> GetAllCategorias();
-        Task<Categoría?> GetCategoriaById(int id);
-        Task<int> AddCategoria(Categoría categoria);
+        Task<IEnumerable<Categoria>> GetAllCategorias();
+        Task<Categoria?> GetCategoriaById(int id);
+        Task<int> AddCategoria(Categoria categoria);
     }
 }
