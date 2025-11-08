@@ -31,6 +31,10 @@ builder.Services.AddTransient<IProductoService, ProductoService>();
 builder.Services.AddTransient<ICarritoRepository, CarritoRepository>();
 builder.Services.AddTransient<ICarritoService, CarritoService>();
 
+// Register campaña services
+builder.Services.AddTransient<ICampaniaRepository, CampaniaRepository>();
+builder.Services.AddTransient<ICampaniaService, CampaniaService>();
+
 // Register favorito services
 builder.Services.AddTransient<IFavoritoRepository, FavoritoRepository>();
 builder.Services.AddTransient<IFavoritoService, FavoritoService>();
