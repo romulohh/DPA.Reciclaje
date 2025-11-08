@@ -39,6 +39,14 @@ builder.Services.AddTransient<ICampaniaService, CampaniaService>();
 builder.Services.AddTransient<IFavoritoRepository, FavoritoRepository>();
 builder.Services.AddTransient<IFavoritoService, FavoritoService>();
 
+// Register metodo pago services
+builder.Services.AddTransient<IMetodoPagoRepository, MetodoPagoRepository>();
+builder.Services.AddTransient<IMetodoPagoService, MetodoPagoService>();
+
+// Register pago services
+builder.Services.AddTransient<IPagoRepository, PagoRepository>();
+builder.Services.AddTransient<IPagoService, PagoService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
