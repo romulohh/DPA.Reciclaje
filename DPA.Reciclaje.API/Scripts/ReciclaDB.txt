@@ -47,7 +47,7 @@ CREATE TABLE Usuario (
     FechaRegistro DATETIME DEFAULT GETDATE()
 );
 -- Tabla de Categorias
-CREATE TABLE Categoría (
+CREATE TABLE Categoria (
     IdCategoria INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(100) NOT NULL
 );
@@ -55,9 +55,9 @@ CREATE TABLE Categoría (
 CREATE TABLE Producto (
     IdProducto INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(50) NOT NULL,
-    Descripción VARCHAR(200) NOT NULL,
+    Descripcion VARCHAR(200) NOT NULL,
 	Marca VARCHAR(50),
-    IdCategoria INT FOREIGN KEY REFERENCES Categoría (IdCategoria),
+    IdCategoria INT FOREIGN KEY REFERENCES Categoria (IdCategoria),
     Motivo CHAR(1), -- I = Intercambio, V = Venta, D = Donacion
 	Estado CHAR(1), -- N = Nuevo, U = Usado
 	Disponible CHAR(1), -- D = Disponible (Default), X = No disponible
@@ -123,9 +123,9 @@ CREATE TABLE ChatMensaje (
     Fecha DATETIME DEFAULT GETDATE(),
     Leído BIT DEFAULT 0
 );
--- Tabla de Campañas
-CREATE TABLE [Campaña] (
-    [IdCampaña] INT PRIMARY KEY IDENTITY(1,1),
+-- Tabla de Campanias
+CREATE TABLE [Campania] (
+    [IdCampania] INT PRIMARY KEY IDENTITY(1,1),
     Título VARCHAR(100) NOT NULL,
     Descripcion VARCHAR(1000),
     FechaInicio DATETIME,
@@ -133,10 +133,10 @@ CREATE TABLE [Campaña] (
     IdDistrito INT FOREIGN KEY REFERENCES Distrito (IdDistrito),
     IdUsuario INT FOREIGN KEY REFERENCES Usuario (IdUsuario)
 );
--- Tabla de imagenes por Campañas
-CREATE TABLE [CampañaImg] (
-    [IdCampañaImg] INT PRIMARY KEY IDENTITY(1,1),
-	[IdCampaña] INT FOREIGN KEY REFERENCES [Campaña] ([IdCampaña]),
+-- Tabla de imagenes por Campanias
+CREATE TABLE [CampaniaImg] (
+    [IdCampaniaImg] INT PRIMARY KEY IDENTITY(1,1),
+	[IdCampania] INT FOREIGN KEY REFERENCES [Campania] ([IdCampania]),
     Imagen VARBINARY(MAX)
 );
 -- Tabla de Interacciones

@@ -9,7 +9,7 @@ public partial class Producto
 
     public string Nombre { get; set; } = null!;
 
-    public string Descripción { get; set; } = null!;
+    public string Descripcion { get; set; } = null!;
 
     public string? Marca { get; set; }
 
@@ -35,7 +35,7 @@ public partial class Producto
 
     public virtual ICollection<Favorito> Favorito { get; set; } = new List<Favorito>();
 
-    public virtual Categoría? IdCategoriaNavigation { get; set; }
+    public virtual Categoria? IdCategoriaNavigation { get; set; }
 
     public virtual Usuario? IdUsuarioNavigation { get; set; }
 
