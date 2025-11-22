@@ -1,5 +1,6 @@
 ﻿using DPA.Reciclaje.CORE.Core.DTOs;
 using DPA.Reciclaje.CORE.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace DPA.Reciclaje.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CampaniaController : ControllerBase
     {
         private readonly ICampaniaService _campaniaService;
@@ -16,6 +18,7 @@ namespace DPA.Reciclaje.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var list = await _campaniaService.GetAllAsync();
