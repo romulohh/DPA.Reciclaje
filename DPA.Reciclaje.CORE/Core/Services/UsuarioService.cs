@@ -69,6 +69,13 @@ namespace DPA.Reciclaje.CORE.Core.Services
             var id = await _usuarioRepository.AddUsuario(usuario);
             return id;
         }
+
+        public async Task<bool> ExistsByEmailAsync(string email)
+        {
+            var user = await _usuarioRepository.GetUsuarioByEmail(email);
+            return user != null;
+        }
+
         private static string HashPassword(string password)
         {
             if (password == null) return string.Empty;
