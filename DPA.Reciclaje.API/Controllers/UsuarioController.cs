@@ -38,5 +38,14 @@ namespace DPA.Reciclaje.API.Controllers
 
             return CreatedAtAction(null, new { id }, dto);
         }
+
+        [HttpGet("exists")]
+        public async Task<IActionResult> ExistsByEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return BadRequest("Email es obligatorio.");
+
+            var exists = await _usuarioService.ExistsByEmailAsync(email);
+            return Ok(exists);
+        }
     }
     }

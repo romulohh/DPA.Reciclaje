@@ -6,5 +6,6 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
     {
         Task<UsuarioResponseDTO?> SignInAsync(SignInDTO dto);
         Task<int> SignUpAsync(SignUpDTO dto);
+        Task<bool> ExistsByEmailAsync(string email);
     }
 }
