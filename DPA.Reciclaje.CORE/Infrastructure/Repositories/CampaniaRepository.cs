@@ -19,11 +19,24 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
         }
         public async Task<IEnumerable<Campania>> GetAllCampanias()
         {
-            return await _context.Campania.ToListAsync();
+            return await _context.Campania
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdProvinciaNavigation)
+                        .ThenInclude(p => p.IdDepartamentoNavigation)
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdDepartamentoNavigation)
+                .ToListAsync();
         }
         public async Task<Campania?> GetCampaniaById(int id)
         {
-            return await _context.Campania.Where(c => c.IdCampania == id).FirstOrDefaultAsync();
+            return await _context.Campania
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdProvinciaNavigation)
+                        .ThenInclude(p => p.IdDepartamentoNavigation)
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdDepartamentoNavigation)
+                .Where(c => c.IdCampania == id)
+                .FirstOrDefaultAsync();
         }
         public async Task<int> AddCampania(Campania campania)
         {

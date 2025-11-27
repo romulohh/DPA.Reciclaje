@@ -64,14 +64,61 @@ namespace DPA.Reciclaje.CORE.Core.Services
 
         private static CampaniaResponseDTO MapToDto(Campania c)
         {
+            DistritoResponseDTO? distritoDto = null;
+
+            var distrito = c.IdDistritoNavigation;
+            if (distrito != null)
+            {
+                DepartamentoResponseDTO? departamentoFromProvincia = null;
+                ProvinciaResponseDTO? provinciaDto = null;
+
+                var provincia = distrito.IdProvinciaNavigation;
+                if (provincia != null)
+                {
+                    if (provincia.IdDepartamentoNavigation != null)
+                    {
+                        departamentoFromProvincia = new DepartamentoResponseDTO
+                        {
+                            IdDepartamento = provincia.IdDepartamentoNavigation.IdDepartamento,
+                            Nombre = provincia.IdDepartamentoNavigation.Nombre
+                        };
+                    }
+
+                    provinciaDto = new ProvinciaResponseDTO
+                    {
+                        IdProvincia = provincia.IdProvincia,
+                        Nombre = provincia.Nombre,
+                        Departamento = departamentoFromProvincia
+                    };
+                }
+
+                DepartamentoResponseDTO? departamentoDto = null;
+                if (distrito.IdDepartamentoNavigation != null)
+                {
+                    departamentoDto = new DepartamentoResponseDTO
+                    {
+                        IdDepartamento = distrito.IdDepartamentoNavigation.IdDepartamento,
+                        Nombre = distrito.IdDepartamentoNavigation.Nombre
+                    };
+                }
+
+                distritoDto = new DistritoResponseDTO
+                {
+                    IdDistrito = distrito.IdDistrito,
+                    Nombre = distrito.Nombre,
+                    Provincia = provinciaDto,
+                    Departamento = departamentoDto ?? departamentoFromProvincia
+                };
+            }
+
             return new CampaniaResponseDTO
             {
                 IdCampania = c.IdCampania,
                 Título = c.Título,
                 Descripcion = c.Descripcion,
-                FechaInicio = (DateTime)c.FechaInicio,
-                FechaFin = (DateTime)c.FechaFin,
-                IdDistrito = (int)c.IdDistrito
+                FechaInicio = c.FechaInicio ?? default,
+                FechaFin = c.FechaFin ?? default,
+                Distrito = distritoDto
             };
         }
     }

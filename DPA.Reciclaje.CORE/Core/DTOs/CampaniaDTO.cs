@@ -22,7 +22,7 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public string Descripcion { get; set; } = string.Empty;
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
-        public int IdDistrito { get; set; }
+        public DistritoResponseDTO? Distrito { get; set; }
     }
 
 }
