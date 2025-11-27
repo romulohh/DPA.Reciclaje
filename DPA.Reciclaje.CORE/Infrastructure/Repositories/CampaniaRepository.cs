@@ -31,5 +31,31 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return campania.IdCampania;
         }
+
+        public async Task<bool> UpdateCampania(Campania campania)
+        {
+            var existing = await _context.Campania.FindAsync(campania.IdCampania);
+            if (existing == null) return false;
+
+            existing.Título = campania.Título;
+            existing.Descripcion = campania.Descripcion;
+            existing.FechaInicio = campania.FechaInicio;
+            existing.FechaFin = campania.FechaFin;
+            existing.IdDistrito = campania.IdDistrito;
+            existing.IdUsuario = campania.IdUsuario;
+
+            _context.Campania.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteCampania(int id)
+        {
+            var existing = await _context.Campania.FindAsync(id);
+            if (existing == null) return false;
+            _context.Campania.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

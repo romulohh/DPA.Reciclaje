@@ -41,6 +41,27 @@ namespace DPA.Reciclaje.CORE.Core.Services
             var id = await _campaniaRepository.AddCampania(campania);
             return id;
         }
+
+        public async Task<bool> UpdateAsync(int id, CampaniaDTO dto)
+        {
+            var existing = await _campaniaRepository.GetCampaniaById(id);
+            if (existing == null) return false;
+
+            existing.Título = dto.Título;
+            existing.Descripcion = dto.Descripcion;
+            existing.FechaInicio = dto.FechaInicio;
+            existing.FechaFin = dto.FechaFin;
+            existing.IdDistrito = dto.IdDistrito;
+            existing.IdUsuario = dto.IdUsuario;
+
+            return await _campaniaRepository.UpdateCampania(existing);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await _campaniaRepository.DeleteCampania(id);
+        }
+
         private static CampaniaResponseDTO MapToDto(Campania c)
         {
             return new CampaniaResponseDTO
