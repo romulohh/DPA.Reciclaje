@@ -31,5 +31,10 @@ namespace DPA.Reciclaje.CORE.Core.Services
             var id = await _favoritoRepository.AddFavorito(fav);
             return id;
         }
+
+        public async Task<bool> DeleteByProductoUsuarioAsync(int idProducto, int idUsuario)
+        {
+            return await _favoritoRepository.DeleteFavoritosByProductoUsuario(idProducto, idUsuario);
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<IEnumerable<FavoritoResponseDTO>> GetAllAsync();
         Task<FavoritoResponseDTO?> GetByIdAsync(int id);
         Task<int> CreateAsync(FavoritoDTO dto);
+        Task<bool> DeleteByProductoUsuarioAsync(int idProducto, int idUsuario);
     }
 }

@@ -1,6 +1,7 @@
 using DPA.Reciclaje.CORE.Core.DTOs;
 using DPA.Reciclaje.CORE.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace DPA.Reciclaje.API.Controllers
 {
@@ -21,6 +22,20 @@ namespace DPA.Reciclaje.API.Controllers
             return Ok(list);
         }
 
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFiltered([FromQuery] int? idProducto, [FromQuery] int? idUsuario)
+        {
+            var list = await _favoritoService.GetAllAsync();
+            var query = list.AsQueryable();
+
+            if (idProducto.HasValue)
+                query = query.Where(f => f.IdProducto == idProducto.Value);
+            if (idUsuario.HasValue)
+                query = query.Where(f => f.IdUsuario == idUsuario.Value);
+
+            return Ok(query);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -39,6 +54,17 @@ namespace DPA.Reciclaje.API.Controllers
             if (id == 0) return Conflict("No se pudo crear el Favorito.");
 
             return CreatedAtAction(nameof(GetById), new { id }, dto);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteByProductoUsuario([FromQuery] int idProducto, [FromQuery] int idUsuario)
+        {
+            if (idProducto <= 0 || idUsuario <= 0) return BadRequest("idProducto e idUsuario son obligatorios.");
+
+            var deleted = await _favoritoService.DeleteByProductoUsuarioAsync(idProducto, idUsuario);
+            if (!deleted) return NotFound();
+
+            return NoContent();
         }
     }
 }

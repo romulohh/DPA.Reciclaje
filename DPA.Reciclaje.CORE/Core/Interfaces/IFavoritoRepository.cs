@@ -7,5 +7,6 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<IEnumerable<Favorito>> GetAllFavoritos();
         Task<Favorito?> GetFavoritoById(int id);
         Task<int> AddFavorito(Favorito favorito);
+        Task<bool> DeleteFavoritosByProductoUsuario(int idProducto, int idUsuario);
     }
 }

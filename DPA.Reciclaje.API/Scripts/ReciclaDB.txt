@@ -43,7 +43,7 @@ CREATE TABLE Usuario (
     Estado CHAR(1) DEFAULT 'A', -- A: Activo (Default), X: Inactivo
 	UltAccionVenta CHAR(1) DEFAULT 'X', -- X = Ninguna, V = Venta/Compra, D = Donación, I = Intercambio
 	UltAccionCompra CHAR(1) DEFAULT 'X', -- X = Ninguna, V = Venta/Compra, D = Donación, I = Intercambio
-	Imagen VARBINARY(MAX),
+	Imagen VARCHAR(100),
     FechaRegistro DATETIME DEFAULT GETDATE()
 );
 -- Tabla de Categorias
@@ -69,7 +69,7 @@ CREATE TABLE Producto (
 CREATE TABLE ProductoImg (
     IdProductoImg INT PRIMARY KEY IDENTITY(1,1),
 	IdProducto INT FOREIGN KEY REFERENCES Producto (IdProducto),
-	Imagen VARBINARY(MAX)
+	Imagen VARCHAR(100)
 );
 -- Tabla de Favoritos
 CREATE TABLE Favorito (
@@ -104,7 +104,7 @@ CREATE TABLE Comentario (
 CREATE TABLE ComentarioImg (
     IdComentarioImg INT PRIMARY KEY IDENTITY(1,1),
     IdComentario INT FOREIGN KEY REFERENCES Comentario (IdComentario),
-	Imagen VARBINARY(MAX)
+	Imagen VARCHAR(100)
 );
 -- Tabla de chats
 CREATE TABLE Chat (
@@ -137,7 +137,7 @@ CREATE TABLE [Campania] (
 CREATE TABLE [CampaniaImg] (
     [IdCampaniaImg] INT PRIMARY KEY IDENTITY(1,1),
 	[IdCampania] INT FOREIGN KEY REFERENCES [Campania] ([IdCampania]),
-    Imagen VARBINARY(MAX)
+    Imagen VARCHAR(100)
 );
 -- Tabla de Interacciones
 CREATE TABLE Interaccion (

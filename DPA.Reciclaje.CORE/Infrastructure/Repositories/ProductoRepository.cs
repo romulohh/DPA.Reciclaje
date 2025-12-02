@@ -16,6 +16,8 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
         public async Task<IEnumerable<Producto>> GetAllProductos()
         {
             return await _context.Producto
+                // Agregado para publicar imagen principal
+                .Include(p => p.ProductoImg)
                 .Include(p => p.IdCategoriaNavigation)
                 .Include(p => p.IdUsuarioNavigation)
                     .ThenInclude(u => u.IdDistritoNavigation)
@@ -31,6 +33,8 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
         public async Task<Producto?> GetProductoById(int id)
         {
             return await _context.Producto.Where(p => p.IdProducto == id)
+                // Agregado para publicar imagen principal
+                .Include(p => p.ProductoImg)
                 .Include(p => p.IdCategoriaNavigation)
                 .Include(p => p.IdUsuarioNavigation)
                     .ThenInclude(u => u.IdDistritoNavigation)
@@ -53,6 +57,8 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
         public async Task<IEnumerable<Producto>> GetProductosByFilter(int? categoriaId, int? departamentoId, int? provinciaId, int? distritoId)
         {
             var query = _context.Producto
+                // Agregado para publicar imagen principal
+                .Include(p => p.ProductoImg)
                 .Include(p => p.IdCategoriaNavigation)
                 .Include(p => p.IdUsuarioNavigation)
                     .ThenInclude(u => u.IdDistritoNavigation)
