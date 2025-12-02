@@ -21,13 +21,20 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public string Nombre { get; set; } = string.Empty;
         public string Descripcion { get; set; } = string.Empty;
         public string? Marca { get; set; }
+        public string? Motivo { get; set; }
+        public string? Estado { get; set; }
+        public string? Disponible { get; set; }
         public decimal? Precio { get; set; }
         public DateTime? FechaPublicacion { get; set; }
+
+        // Agregado para publicar imagen principal
+        public string? Imagen { get; set; }
 
         public CategoriaResponseDTO? Categoria { get; set; }
 
         public UsuarioNestedDTO? Usuario { get; set; }
     }
+
 
     public class UsuarioNestedDTO
     {

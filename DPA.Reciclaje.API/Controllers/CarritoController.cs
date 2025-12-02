@@ -53,6 +53,14 @@ namespace DPA.Reciclaje.API.Controllers
             return Ok(list);
         }
 
+        [HttpGet("active/{usuarioId}")]
+        public async Task<IActionResult> GetActiveByUsuario(int usuarioId)
+        {
+            var list = await _carritoService.GetByUsuarioAsync(usuarioId);
+            var active = list?.Where(c => string.Equals(c.Estado, "A", StringComparison.OrdinalIgnoreCase));
+            return Ok(active);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
