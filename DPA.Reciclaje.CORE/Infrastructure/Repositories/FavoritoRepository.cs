@@ -29,5 +29,15 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return favorito.IdFavorito;
         }
+
+        public async Task<bool> DeleteFavoritosByProductoUsuario(int idProducto, int idUsuario)
+        {
+            var items = await _context.Favorito.Where(f => f.IdProducto == idProducto && f.IdUsuario == idUsuario).ToListAsync();
+            if (items == null || items.Count == 0) return false;
+
+            _context.Favorito.RemoveRange(items);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

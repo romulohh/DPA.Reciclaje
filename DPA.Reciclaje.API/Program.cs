@@ -60,6 +60,10 @@ builder.Services.AddTransient<IProvinciaService, ProvinciaService>();
 builder.Services.AddTransient<IDistritoRepository, DistritoRepository>();
 builder.Services.AddTransient<IDistritoService, DistritoService>();
 
+// Register Comertario services
+builder.Services.AddTransient<IComentarioRepository, ComentarioRepository>();
+builder.Services.AddTransient<IComentarioService, ComentarioService>();
+
 // Register JWTService and authentication
 builder.Services.AddSharedInfrastructure(_configuration);
 
@@ -87,8 +91,10 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseCors("AllowAll"); 
+
 app.UseAuthorization();
-app.UseCors("AllowAll");
+
 
 
 app.MapControllers();

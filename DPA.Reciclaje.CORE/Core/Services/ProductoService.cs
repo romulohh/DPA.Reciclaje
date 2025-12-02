@@ -61,8 +61,13 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 Nombre = p.Nombre,
                 Descripcion = p.Descripcion,
                 Marca = p.Marca,
+                Motivo = p.Motivo,
+                Estado = p.Estado,
+                Disponible = p.Disponible,
                 Precio = p.Precio,
                 FechaPublicacion = p.FechaPublicación,
+                // Agrehado para publicar imagen principal
+                Imagen = p.ProductoImg != null && p.ProductoImg.Any() ? p.ProductoImg.First().Imagen : null,
                 Categoria = p.IdCategoriaNavigation != null ? new CategoriaResponseDTO { IdCategoria = p.IdCategoriaNavigation.IdCategoria, Nombre = p.IdCategoriaNavigation.Nombre } : null,
                 Usuario = p.IdUsuarioNavigation != null ? new UsuarioNestedDTO
                 {

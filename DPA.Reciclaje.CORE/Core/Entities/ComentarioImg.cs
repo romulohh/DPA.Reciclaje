@@ -9,7 +9,7 @@ public partial class ComentarioImg
 
     public int? IdComentario { get; set; }
 
-    public byte[]? Imagen { get; set; }
+    public string? Imagen { get; set; }
 
     public virtual Comentario? IdComentarioNavigation { get; set; }
 }
