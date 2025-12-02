@@ -7,15 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DPA.Reciclaje.CORE.Infrastructure.Shared;
 
 namespace DPA.Reciclaje.CORE.Core.Services
 {
     public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepository _usuarioRepository;
-        public UsuarioService(IUsuarioRepository usuarioRepository)
+        private readonly IJWTService _jwtService;
+        public UsuarioService(IUsuarioRepository usuarioRepository, IJWTService jwtService)
         {
             _usuarioRepository = usuarioRepository;
+            _jwtService = jwtService;
         }
         public async Task<UsuarioResponseDTO?> SignInAsync(SignInDTO dto)
         {
@@ -25,6 +28,8 @@ namespace DPA.Reciclaje.CORE.Core.Services
             var hashed = HashPassword(dto.Clave);
             if (usuario.Clave != hashed) return null;
 
+            var token = _jwtService.GenerateJWToken(usuario);
+
             return new UsuarioResponseDTO
             {
                 IdUsuario = usuario.IdUsuario,
@@ -33,7 +38,8 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 Email = usuario.Email,
                 Estado = usuario.Estado,
                 Situacion = usuario.Situacion,
-                Rol = usuario.Rol
+                Rol = usuario.Rol,
+                Token = token
             };
         }
         public async Task<int> SignUpAsync(SignUpDTO dto)
@@ -63,6 +69,13 @@ namespace DPA.Reciclaje.CORE.Core.Services
             var id = await _usuarioRepository.AddUsuario(usuario);
             return id;
         }
+
+        public async Task<bool> ExistsByEmailAsync(string email)
+        {
+            var user = await _usuarioRepository.GetUsuarioByEmail(email);
+            return user != null;
+        }
+
         private static string HashPassword(string password)
         {
             if (password == null) return string.Empty;

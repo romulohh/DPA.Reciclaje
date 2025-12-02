@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DPA.Reciclaje.CORE.Core.Entities;
 
-public partial class Categoría
+public partial class Categoria
 {
     public int IdCategoria { get; set; }
 
