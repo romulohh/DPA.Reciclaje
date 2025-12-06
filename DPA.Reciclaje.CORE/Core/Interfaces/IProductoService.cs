@@ -10,5 +10,8 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<ProductoResponseDTO?> GetByIdAsync(int id);
         Task<int> CreateAsync(ProductoDTO dto);
         Task<IEnumerable<ProductoResponseDTO>> FilterAsync(int? categoriaId, int? departamentoId, int? provinciaId, int? distritoId);
+
+        // NUEVO
+        Task AddImagenesAsync(int idProducto, IEnumerable<string> nombresImagenes);
     }
 }

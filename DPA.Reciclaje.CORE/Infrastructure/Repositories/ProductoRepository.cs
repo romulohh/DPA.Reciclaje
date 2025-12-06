@@ -54,6 +54,23 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
             return producto.IdProducto;
         }
 
+        // NUEVO
+        public async Task AddImagenesAsync(int idProducto, IEnumerable<string> nombresImagenes)
+        {
+            foreach (var nombre in nombresImagenes)
+            {
+                var img = new ProductoImg
+                {
+                    IdProducto = idProducto,
+                    Imagen = nombre
+                };
+
+                await _context.ProductoImg.AddAsync(img);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Producto>> GetProductosByFilter(int? categoriaId, int? departamentoId, int? provinciaId, int? distritoId)
         {
             var query = _context.Producto
