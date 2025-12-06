@@ -13,5 +13,7 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public int? IdDepartamento { get; set; }
         public int? IdProvincia { get; set; }
         public string Nombre { get; set; } = string.Empty;
+        public ProvinciaResponseDTO? Provincia { get; set; }
+        public DepartamentoResponseDTO? Departamento { get; set; }
     }
 }

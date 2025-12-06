@@ -59,6 +59,31 @@ namespace DPA.Reciclaje.CORE.Core.Services
             return list.Select(p => MapToDto(p));
         }
 
+        // NUEVO: actualizar producto
+        public async Task<bool> UpdateAsync(int id, ProductoDTO dto)
+        {
+            var existing = await _productoRepository.GetProductoById(id);
+            if (existing == null) return false;
+
+            existing.Nombre = dto.Nombre;
+            existing.Descripcion = dto.Descripcion;
+            existing.Marca = dto.Marca;
+            existing.IdCategoria = dto.IdCategoria;
+            existing.Motivo = dto.Motivo;
+            existing.Estado = dto.Estado;
+            existing.Disponible = dto.Disponible;
+            existing.Precio = dto.Precio;
+            existing.IdUsuario = dto.IdUsuario;
+
+            return await _productoRepository.UpdateProducto(existing);
+        }
+
+        // NUEVO: eliminar producto
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await _productoRepository.DeleteProducto(id);
+        }
+
         private static ProductoResponseDTO MapToDto(Producto p)
         {
             return new ProductoResponseDTO
