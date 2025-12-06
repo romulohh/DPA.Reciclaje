@@ -2,6 +2,9 @@ using DPA.Reciclaje.CORE.Core.DTOs;
 using DPA.Reciclaje.CORE.Core.Interfaces;
 using DPA.Reciclaje.CORE.Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DPA.Reciclaje.API.Controllers
 {
@@ -10,9 +13,11 @@ namespace DPA.Reciclaje.API.Controllers
     public class ComentarioController : ControllerBase
     {
         private readonly IComentarioService _comentarioService;
-        public ComentarioController(IComentarioService comentarioService)
+        private readonly IUsuarioRepository _usuarioRepository;
+        public ComentarioController(IComentarioService comentarioService, IUsuarioRepository usuarioRepository)
         {
             _comentarioService = comentarioService;
+            _usuarioRepository = usuarioRepository;
         }
 
         [HttpPost]
@@ -46,6 +51,47 @@ namespace DPA.Reciclaje.API.Controllers
         {
             var list = await _comentarioService.GetByProductoAndVendedorAsync(idProducto, idUsuarioVendedor);
             return Ok(list);
+        }
+
+        [HttpGet("byProducto")]
+        public async Task<IActionResult> GetByProducto([FromQuery] int idProducto)
+        {
+            var list = await _comentarioService.GetAllAsync();
+            if (list == null) return Ok(Enumerable.Empty<object>());
+
+            var filtered = list.Where(c => c.IdProducto == idProducto).ToList();
+
+            // Fetch comprador user names in a single repository call to avoid concurrent DbContext usage
+            var userIds = filtered.Select(c => c.IdUsuarioComprador).Where(id => id.HasValue).Select(id => id!.Value).Distinct().ToList();
+            var usersDict = new Dictionary<int, DPA.Reciclaje.CORE.Core.Entities.Usuario?>();
+            if (userIds.Any())
+            {
+                var users = await _usuarioRepository.GetAllUsuarios();
+                usersDict = users.Where(u => userIds.Contains(u.IdUsuario)).ToDictionary(u => u.IdUsuario, u => (DPA.Reciclaje.CORE.Core.Entities.Usuario?)u);
+            }
+
+            // Map to the desired JSON shape with nested usuarioComprador
+            var result = filtered.Select(c => new
+            {
+                idComentario = c.IdComentario,
+                idUsuarioVendedor = c.IdUsuarioVendedor,
+                idUsuarioComprador = c.IdUsuarioComprador,
+                usuarioComprador = new
+                {
+                    idUsuario = c.IdUsuarioComprador ?? 0,
+                    nombres = c.IdUsuarioComprador.HasValue && usersDict.ContainsKey(c.IdUsuarioComprador.Value) && usersDict[c.IdUsuarioComprador.Value] != null
+                        ? string.Join(" ", new[] { usersDict[c.IdUsuarioComprador.Value].Nombres, usersDict[c.IdUsuarioComprador.Value].Apellidos }.Where(s => !string.IsNullOrWhiteSpace(s)))
+                        : string.Empty
+                },
+                idProducto = c.IdProducto,
+                texto = c.Texto,
+                calificacion = c.Calificacion,
+                estado = c.Estado,
+                fecha = c.Fecha,
+                imagenes = c.Imagenes ?? new List<string>()
+            }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
