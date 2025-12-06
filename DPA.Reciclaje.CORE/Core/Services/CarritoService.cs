@@ -113,6 +113,24 @@ namespace DPA.Reciclaje.CORE.Core.Services
             return await _carritoRepository.DeleteCarrito(id);
         }
 
+        public async Task<int> AddItemAsync(int idCarrito, int idProducto, decimal precio)
+        {
+            var item = new CarritoProducto
+            {
+                IdCarrito = idCarrito,
+                IdProducto = idProducto,
+                Precio = precio,
+                Fecha = DateTime.Now
+            };
+
+            return await _carritoRepository.AddCarritoProducto(item);
+        }
+
+        public async Task<bool> ExistsProductInCarritoAsync(int idCarrito, int idProducto)
+        {
+            return await _carritoRepository.ExistsProductInCarrito(idCarrito, idProducto);
+        }
+
         private static CarritoResponseDTO MapToDto(Carrito c)
         {
             return new CarritoResponseDTO
@@ -135,6 +153,8 @@ namespace DPA.Reciclaje.CORE.Core.Services
                         IdProducto = i.IdProductoNavigation.IdProducto,
                         Nombre = i.IdProductoNavigation.Nombre,
                         Estado = i.IdProductoNavigation.Estado,
+                        Descripcion = i.IdProductoNavigation.Descripcion,
+                        Imagen = i.IdProductoNavigation.ProductoImg != null && i.IdProductoNavigation.ProductoImg.Any() ? i.IdProductoNavigation.ProductoImg.First().Imagen : null,
                         Precio = i.Precio ?? i.IdProductoNavigation.Precio
                     } : null
                 })

@@ -18,6 +18,7 @@ public partial class Campania
     public int? IdDistrito { get; set; }
 
     public int? IdUsuario { get; set; }
+    public string? Imagen { get; set; }
 
     public virtual ICollection<CampaniaImg> CampaniaImg { get; set; } = new List<CampaniaImg>();
 
