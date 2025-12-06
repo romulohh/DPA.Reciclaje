@@ -25,6 +25,7 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public DateTime FechaFin { get; set; }
         public int IdDistrito { get; set; }
         public string? Imagen { get; set; }
+        public DistritoResponseDTO? Distrito { get; set; }
     }
 
 }

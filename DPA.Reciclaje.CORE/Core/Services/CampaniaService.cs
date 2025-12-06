@@ -43,6 +43,27 @@ namespace DPA.Reciclaje.CORE.Core.Services
             return id;
         }
 
+        public async Task<bool> UpdateAsync(int id, CampaniaDTO dto)
+        {
+            var existing = await _campaniaRepository.GetCampaniaById(id);
+            if (existing == null) return false;
+
+            existing.Título = dto.Título;
+            existing.Descripcion = dto.Descripcion;
+            existing.FechaInicio = dto.FechaInicio;
+            existing.FechaFin = dto.FechaFin;
+            existing.IdDistrito = dto.IdDistrito;
+            existing.IdUsuario = dto.IdUsuario;
+
+            return await _campaniaRepository.UpdateCampania(existing);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await _campaniaRepository.DeleteCampania(id);
+        }
+
+
         public async Task<IEnumerable<CampaniaResponseDTO>> GetVigentesAsync()
         {
             var list = await _campaniaRepository.GetCampaniasVigentes();
@@ -51,6 +72,53 @@ namespace DPA.Reciclaje.CORE.Core.Services
 
         private static CampaniaResponseDTO MapToDto(Campania c)
         {
+            DistritoResponseDTO? distritoDto = null;
+
+            var distrito = c.IdDistritoNavigation;
+            if (distrito != null)
+            {
+                DepartamentoResponseDTO? departamentoFromProvincia = null;
+                ProvinciaResponseDTO? provinciaDto = null;
+
+                var provincia = distrito.IdProvinciaNavigation;
+                if (provincia != null)
+                {
+                    if (provincia.IdDepartamentoNavigation != null)
+                    {
+                        departamentoFromProvincia = new DepartamentoResponseDTO
+                        {
+                            IdDepartamento = provincia.IdDepartamentoNavigation.IdDepartamento,
+                            Nombre = provincia.IdDepartamentoNavigation.Nombre
+                        };
+                    }
+
+                    provinciaDto = new ProvinciaResponseDTO
+                    {
+                        IdProvincia = provincia.IdProvincia,
+                        Nombre = provincia.Nombre,
+                        Departamento = departamentoFromProvincia
+                    };
+                }
+
+                DepartamentoResponseDTO? departamentoDto = null;
+                if (distrito.IdDepartamentoNavigation != null)
+                {
+                    departamentoDto = new DepartamentoResponseDTO
+                    {
+                        IdDepartamento = distrito.IdDepartamentoNavigation.IdDepartamento,
+                        Nombre = distrito.IdDepartamentoNavigation.Nombre
+                    };
+                }
+
+                distritoDto = new DistritoResponseDTO
+                {
+                    IdDistrito = distrito.IdDistrito,
+                    Nombre = distrito.Nombre,
+                    Provincia = provinciaDto,
+                    Departamento = departamentoDto ?? departamentoFromProvincia
+                };
+            }
+
             return new CampaniaResponseDTO
             {
                 IdCampania = c.IdCampania,
@@ -59,7 +127,8 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 FechaInicio = (DateTime)c.FechaInicio,
                 FechaFin = (DateTime)c.FechaFin,
                 IdDistrito = (int)c.IdDistrito,
-                Imagen = c.Imagen
+                Imagen = c.Imagen,
+                Distrito = distritoDto
             };
         }
     }

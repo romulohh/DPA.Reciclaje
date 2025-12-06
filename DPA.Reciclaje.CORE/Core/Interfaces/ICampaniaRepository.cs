@@ -8,5 +8,7 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<IEnumerable<Campania>> GetAllCampanias();
         Task<Campania?> GetCampaniaById(int id);
         Task<IEnumerable<Campania>> GetCampaniasVigentes();
+        Task<bool> UpdateCampania(Campania campania);
+        Task<bool> DeleteCampania(int id);
     }
 }

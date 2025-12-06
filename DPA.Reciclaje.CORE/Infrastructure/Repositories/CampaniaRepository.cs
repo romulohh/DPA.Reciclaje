@@ -19,17 +19,56 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
         }
         public async Task<IEnumerable<Campania>> GetAllCampanias()
         {
-            return await _context.Campania.ToListAsync();
+            return await _context.Campania
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdProvinciaNavigation)
+                        .ThenInclude(p => p.IdDepartamentoNavigation)
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdDepartamentoNavigation)
+                .ToListAsync();
         }
         public async Task<Campania?> GetCampaniaById(int id)
         {
-            return await _context.Campania.Where(c => c.IdCampania == id).FirstOrDefaultAsync();
+            return await _context.Campania
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdProvinciaNavigation)
+                        .ThenInclude(p => p.IdDepartamentoNavigation)
+                .Include(c => c.IdDistritoNavigation)
+                    .ThenInclude(d => d.IdDepartamentoNavigation)
+                .Where(c => c.IdCampania == id)
+                .FirstOrDefaultAsync();
         }
         public async Task<int> AddCampania(Campania campania)
         {
             await _context.Campania.AddAsync(campania);
             await _context.SaveChangesAsync();
             return campania.IdCampania;
+        }
+
+        public async Task<bool> UpdateCampania(Campania campania)
+        {
+            var existing = await _context.Campania.FindAsync(campania.IdCampania);
+            if (existing == null) return false;
+
+            existing.Título = campania.Título;
+            existing.Descripcion = campania.Descripcion;
+            existing.FechaInicio = campania.FechaInicio;
+            existing.FechaFin = campania.FechaFin;
+            existing.IdDistrito = campania.IdDistrito;
+            existing.IdUsuario = campania.IdUsuario;
+
+            _context.Campania.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteCampania(int id)
+        {
+            var existing = await _context.Campania.FindAsync(id);
+            if (existing == null) return false;
+            _context.Campania.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<IEnumerable<Campania>> GetCampaniasVigentes()

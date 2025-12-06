@@ -52,5 +52,25 @@ namespace DPA.Reciclaje.API.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id }, dto);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] CampaniaDTO dto)
+        {
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Título))
+                return BadRequest("Título es obligatorio.");
+
+            var updated = await _campaniaService.UpdateAsync(id, dto);
+            if (!updated) return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _campaniaService.DeleteAsync(id);
+            if (!deleted) return NotFound();
+            return NoContent();
+        }
     }
 }
