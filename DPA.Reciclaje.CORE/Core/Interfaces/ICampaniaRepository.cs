@@ -7,5 +7,6 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<int> AddCampania(Campania campania);
         Task<IEnumerable<Campania>> GetAllCampanias();
         Task<Campania?> GetCampaniaById(int id);
+        Task<IEnumerable<Campania>> GetCampaniasVigentes();
     }
 }

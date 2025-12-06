@@ -16,5 +16,7 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<Carrito?> GetCarritoById(int id);
         Task<IEnumerable<Carrito>> GetCarritosByUsuarioId(int usuarioId);
         Task<bool> DeleteCarrito(int id);
+        Task<int> AddCarritoProducto(CarritoProducto item);
+        Task<bool> ExistsProductInCarrito(int idCarrito, int idProducto);
     }
 }
