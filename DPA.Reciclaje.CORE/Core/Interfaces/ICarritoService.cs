@@ -12,5 +12,7 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<CarritoResponseDTO?> GetByIdAsync(int id);
         Task<IEnumerable<CarritoResponseDTO>> GetByUsuarioAsync(int usuarioId);
         Task<bool> DeleteAsync(int id);
+        Task<int> AddItemAsync(int idCarrito, int idProducto, decimal precio);
+        Task<bool> ExistsProductInCarritoAsync(int idCarrito, int idProducto);
     }
 }

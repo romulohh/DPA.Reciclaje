@@ -25,6 +25,14 @@ namespace DPA.Reciclaje.API.Controllers
             return Ok(list);
         }
 
+        [HttpGet("vigentes")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetVigentes()
+        {
+            var list = await _campaniaService.GetVigentesAsync();
+            return Ok(list);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

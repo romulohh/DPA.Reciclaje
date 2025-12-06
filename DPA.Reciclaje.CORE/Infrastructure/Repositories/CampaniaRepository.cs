@@ -70,5 +70,13 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Campania>> GetCampaniasVigentes()
+        {
+            var now = DateTime.Now;
+            return await _context.Campania
+                .Where(c => c.FechaInicio <= now && c.FechaFin >= now)
+                .ToListAsync();
+        }
     }
 }

@@ -136,6 +136,7 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
                 .Include(c => c.IdUsuarioNavigation)
                 .Include(c => c.CarritoProducto)
                     .ThenInclude(ci => ci.IdProductoNavigation)
+                        .ThenInclude(p => p.ProductoImg)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -146,6 +147,7 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
                 .Include(c => c.IdUsuarioNavigation)
                 .Include(c => c.CarritoProducto)
                     .ThenInclude(ci => ci.IdProductoNavigation)
+                        .ThenInclude(p => p.ProductoImg)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.IdCarrito == id);
         }
@@ -156,9 +158,23 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
                 .Include(c => c.IdUsuarioNavigation)
                 .Include(c => c.CarritoProducto)
                     .ThenInclude(ci => ci.IdProductoNavigation)
+                        .ThenInclude(p => p.ProductoImg)
                 .Where(c => c.IdUsuario == usuarioId)
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public async Task<int> AddCarritoProducto(CarritoProducto item)
+        {
+            item.Fecha = DateTime.Now;
+            await _context.CarritoProducto.AddAsync(item);
+            await _context.SaveChangesAsync();
+            return item.IdCarritoItem;
+        }
+
+        public async Task<bool> ExistsProductInCarrito(int idCarrito, int idProducto)
+        {
+            return await _context.CarritoProducto.AnyAsync(cp => cp.IdCarrito == idCarrito && cp.IdProducto == idProducto);
         }
     }
 }
