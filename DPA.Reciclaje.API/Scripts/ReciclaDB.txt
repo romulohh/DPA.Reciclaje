@@ -131,7 +131,8 @@ CREATE TABLE [Campania] (
     FechaInicio DATETIME,
     FechaFin DATETIME,
     IdDistrito INT FOREIGN KEY REFERENCES Distrito (IdDistrito),
-    IdUsuario INT FOREIGN KEY REFERENCES Usuario (IdUsuario)
+    IdUsuario INT FOREIGN KEY REFERENCES Usuario (IdUsuario),
+    Imagen VARCHAR(100)
 );
 -- Tabla de imagenes por Campanias
 CREATE TABLE [CampaniaImg] (

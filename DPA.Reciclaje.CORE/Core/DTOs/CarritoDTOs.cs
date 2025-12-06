@@ -16,6 +16,13 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public decimal? Precio { get; set; }
     }
 
+    public class AddCarritoItemDTO
+    {
+        public int IdCarrito { get; set; }
+        public int IdProducto { get; set; }
+        public decimal Precio { get; set; }
+    }
+
     public class CarritoResponseDTO
     {
         public int IdCarrito { get; set; }
@@ -37,6 +44,8 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public int IdProducto { get; set; }
         public string? Nombre { get; set; }
         public string? Estado { get; set; }
+        public string? Descripcion { get; set; }
+        public string? Imagen { get; set; }
         public decimal? Precio { get; set; }
     }
 }

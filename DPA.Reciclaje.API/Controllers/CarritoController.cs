@@ -22,6 +22,25 @@ namespace DPA.Reciclaje.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id }, dto);
         }
 
+        [HttpPost("item")]
+        public async Task<IActionResult> AddItem([FromBody] AddCarritoItemDTO dto)
+        {
+            if (dto == null || dto.IdCarrito <= 0 || dto.IdProducto <= 0 || dto.Precio <= 0)
+                return BadRequest("idCarrito, idProducto y precio son obligatorios.");
+
+            var id = await _carritoService.AddItemAsync(dto.IdCarrito, dto.IdProducto, dto.Precio);
+            return CreatedAtAction(nameof(GetById), new { id = dto.IdCarrito }, dto);
+        }
+
+        [HttpGet("exists-item")]
+        public async Task<IActionResult> ExistsItem([FromQuery] int idCarrito, [FromQuery] int idProducto)
+        {
+            if (idCarrito <= 0 || idProducto <= 0) return BadRequest("idCarrito e idProducto son obligatorios.");
+
+            var exists = await _carritoService.ExistsProductInCarritoAsync(idCarrito, idProducto);
+            return Ok(exists);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] CarritoDTO dto)
         {

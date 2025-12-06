@@ -14,6 +14,7 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public DateTime FechaFin { get; set; }
         public int IdDistrito { get; set; }
         public int IdUsuario { get; set; }
+        public string? Imagen { get; set; }
     }
     public class CampaniaResponseDTO
     {
@@ -23,6 +24,7 @@ namespace DPA.Reciclaje.CORE.Core.DTOs
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public int IdDistrito { get; set; }
+        public string? Imagen { get; set; }
     }
 
 }
