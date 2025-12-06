@@ -100,5 +100,37 @@ namespace DPA.Reciclaje.CORE.Infrastructure.Repositories
 
             return await query.AsNoTracking().ToListAsync();
         }
+
+        // NUEVO: actualizar producto
+        public async Task<bool> UpdateProducto(Producto producto)
+        {
+            var existing = await _context.Producto.FindAsync(producto.IdProducto);
+            if (existing == null) return false;
+
+            existing.Nombre = producto.Nombre;
+            existing.Descripcion = producto.Descripcion;
+            existing.Marca = producto.Marca;
+            existing.IdCategoria = producto.IdCategoria;
+            existing.Motivo = producto.Motivo;
+            existing.Estado = producto.Estado;
+            existing.Disponible = producto.Disponible;
+            existing.Precio = producto.Precio;
+            existing.IdUsuario = producto.IdUsuario;
+
+            _context.Producto.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // NUEVO: eliminar producto
+        public async Task<bool> DeleteProducto(int id)
+        {
+            var existing = await _context.Producto.FindAsync(id);
+            if (existing == null) return false;
+
+            _context.Producto.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

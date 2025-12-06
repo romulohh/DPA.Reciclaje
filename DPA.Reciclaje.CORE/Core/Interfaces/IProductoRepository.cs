@@ -13,5 +13,9 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
 
         // NUEVO: registrar las imágenes de un producto
         Task AddImagenesAsync(int idProducto, IEnumerable<string> nombresImagenes);
+
+        // NUEVO: actualizar y eliminar producto
+        Task<bool> UpdateProducto(Producto producto);
+        Task<bool> DeleteProducto(int id);
     }
 }
