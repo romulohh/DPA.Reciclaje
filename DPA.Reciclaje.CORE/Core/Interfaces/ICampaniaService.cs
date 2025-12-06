@@ -7,5 +7,6 @@ namespace DPA.Reciclaje.CORE.Core.Interfaces
         Task<int> CreateAsync(CampaniaDTO dto);
         Task<IEnumerable<CampaniaResponseDTO>> GetAllAsync();
         Task<CampaniaResponseDTO?> GetByIdAsync(int id);
+        Task<IEnumerable<CampaniaResponseDTO>> GetVigentesAsync();
     }
 }

@@ -36,11 +36,19 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 FechaInicio = dto.FechaInicio,
                 FechaFin = dto.FechaFin,
                 IdDistrito = dto.IdDistrito,
-                IdUsuario = dto.IdUsuario
+                IdUsuario = dto.IdUsuario,
+                Imagen = dto.Imagen
             };
             var id = await _campaniaRepository.AddCampania(campania);
             return id;
         }
+
+        public async Task<IEnumerable<CampaniaResponseDTO>> GetVigentesAsync()
+        {
+            var list = await _campaniaRepository.GetCampaniasVigentes();
+            return list.Select(c => MapToDto(c));
+        }
+
         private static CampaniaResponseDTO MapToDto(Campania c)
         {
             return new CampaniaResponseDTO
@@ -50,7 +58,8 @@ namespace DPA.Reciclaje.CORE.Core.Services
                 Descripcion = c.Descripcion,
                 FechaInicio = (DateTime)c.FechaInicio,
                 FechaFin = (DateTime)c.FechaFin,
-                IdDistrito = (int)c.IdDistrito
+                IdDistrito = (int)c.IdDistrito,
+                Imagen = c.Imagen
             };
         }
     }
